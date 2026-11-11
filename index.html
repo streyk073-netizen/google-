@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmartTab</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="glow g1"></div><div class="glow g2"></div>
+<header><div class="logo"><span>✦</span> SmartTab</div><div class="right"><span id="date"></span><button id="theme" title="Mavzu">☾</button></div></header>
+<main>
+<section class="hero"><p class="tag">YANGI KUN • YANGI IMKONIYAT</p><h1 id="greeting">Xush kelibsiz!</h1><p class="muted">Bugun nimaga erishamiz?</p>
+<form id="search"><span>⌕</span><input id="query" placeholder="Google orqali qidirish..." autocomplete="off"><kbd>ENTER ↵</kbd></form></section>
+<section class="stats"><div class="stat"><b>✓</b><div><strong id="done">0</strong><small>Bajarilgan vazifa</small></div></div><div class="stat"><b>◎</b><div><strong id="total">0</strong><small>Bugungi vazifa</small></div></div><div class="stat"><b>◷</b><div><strong id="clock">--:--</strong><small>Hozirgi vaqt</small></div></div></section>
+<section class="grid">
+<article class="panel tasks"><div class="heading"><div><p class="tag">REJALASHTIRISH</p><h2>Vazifalarim</h2></div><span class="pill" id="percent">0% bajarildi</span></div>
+<form id="taskForm"><input id="taskInput" placeholder="Yangi vazifa yozing..." maxlength="120" required><button class="primary">+ Qo‘shish</button></form><div class="progress"><span id="bar"></span></div><ul id="tasks"></ul><p id="empty" class="muted empty">Hozircha vazifa yo‘q. Birinchi vazifangizni qo‘shing ✨</p></article>
+<article class="panel focus"><div class="heading"><div><p class="tag">DIQQATNI JAMLASH</p><h2>Focus timer</h2></div><span class="pill">Pomodoro</span></div><div class="timer"><div><strong id="time">25:00</strong><small id="modeLabel">FOCUS TIME</small></div></div><div class="controls"><button class="primary" id="start">Boshlash</button><button class="secondary" id="reset">Qayta</button></div><div class="modes"><button class="mode active" data-min="25" data-label="FOCUS TIME">25 daqiqa</button><button class="mode" data-min="5" data-label="SHORT BREAK">5 daqiqa tanaffus</button></div></article>
+<article class="panel notes"><div class="heading"><div><p class="tag">TEZKOR FIKRLAR</p><h2>Mening qaydlarim</h2></div><span class="pill">Avto saqlanadi</span></div><textarea id="note" placeholder="G‘oya, eslatma yoki muhim ma’lumotlarni shu yerga yozing..."></textarea><div class="notefoot"><span id="saved">Qaydlar shu qurilmada saqlanadi</span><span id="chars">0 belgi</span></div></article>
+<article class="panel links"><div class="heading"><div><p class="tag">TEZKOR KIRISH</p><h2>Sevimli saytlar</h2></div></div><div class="shortcuts">
+<a href="https://youtube.com" target="_blank"><i class="red">▶</i>YouTube</a><a href="https://github.com" target="_blank"><i>⌘</i>GitHub</a><a href="https://mail.google.com" target="_blank"><i class="blue">✉</i>Gmail</a><a href="https://chatgpt.com" target="_blank"><i class="green">✳</i>ChatGPT</a><a href="https://drive.google.com" target="_blank"><i class="yellow">▣</i>Drive</a><a href="https://translate.google.com" target="_blank"><i class="violet">文</i>Tarjimon</a></div></article>
+</section><footer>SmartTab <span>•</span> Oddiy reja. Katta natija.</footer>
+</main><script src="app.js"></script></body></html>

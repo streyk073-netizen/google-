@@ -1,0 +1,1 @@
+O‘rnatish: ZIPni extract qiling → Chrome chrome://extensions → Developer mode → Load unpacked → shu papkani tanlang. Yangi tabda SmartTab ochiladi.

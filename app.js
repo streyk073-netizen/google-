@@ -1,0 +1,19 @@
+const $=id=>document.getElementById(id);
+const storage={
+ async get(k,f){try{const x=await chrome.storage.local.get(k);return x[k]??f}catch{return f}},
+ async set(k,v){try{await chrome.storage.local.set({[k]:v})}catch{}}
+};
+let tasks=[],remaining=1500,totalSeconds=1500,interval=null,running=false;
+function clock(){let d=new Date();$('clock').textContent=d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});$('date').textContent=d.toLocaleDateString('uz-UZ',{weekday:'long',day:'numeric',month:'long'});let h=d.getHours();$('greeting').textContent=h<11?'Xayrli tong!':h<18?'Xayrli kun!':'Xayrli kech!'}
+clock();setInterval(clock,15000);
+async function render(){let ul=$('tasks');ul.replaceChildren();tasks.forEach((t,i)=>{let li=document.createElement('li');li.className='task'+(t.done?' done':'');let cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.addEventListener('change',async()=>{tasks[i].done=cb.checked;await storage.set('tasks',tasks);render()});let span=document.createElement('span');span.textContent=t.text;let del=document.createElement('button');del.className='delete';del.textContent='×';del.title='O‘chirish';del.addEventListener('click',async()=>{tasks.splice(i,1);await storage.set('tasks',tasks);render()});li.append(cb,span,del);ul.append(li)});let done=tasks.filter(t=>t.done).length,p=tasks.length?Math.round(done/tasks.length*100):0;$('done').textContent=done;$('total').textContent=tasks.length;$('percent').textContent=p+'% bajarildi';$('bar').style.width=p+'%';$('empty').hidden=tasks.length>0}
+$('taskForm').addEventListener('submit',async e=>{e.preventDefault();let v=$('taskInput').value.trim();if(!v)return;tasks.unshift({text:v,done:false});$('taskInput').value='';await storage.set('tasks',tasks);render()});
+$('search').addEventListener('submit',e=>{e.preventDefault();let q=$('query').value.trim();if(q)location.href='https://www.google.com/search?q='+encodeURIComponent(q)});
+$('note').addEventListener('input',async()=>{await storage.set('note',$('note').value);$('chars').textContent=$('note').value.length+' belgi';$('saved').textContent='Saqlandi ✓'});
+function draw(){let m=Math.floor(remaining/60),s=remaining%60;$('time').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');let deg=Math.max(0,Math.min(360,(totalSeconds-remaining)/totalSeconds*360));document.querySelector('.timer>div').style.background=`radial-gradient(circle,var(--panel) 62%,transparent 64%),conic-gradient(var(--accent) ${deg}deg,#35405c ${deg}deg)`}
+function pause(){clearInterval(interval);interval=null;running=false}
+$('start').addEventListener('click',()=>{if(running){pause();$('start').textContent='Davom ettirish';return}running=true;$('start').textContent='Pauza';interval=setInterval(()=>{remaining--;draw();if(remaining<=0){pause();$('start').textContent='Boshlash';$('modeLabel').textContent='VAQT TUGADI';document.title='Vaqt tugadi! — SmartTab'}},1000)});
+$('reset').addEventListener('click',()=>{pause();remaining=totalSeconds;$('start').textContent='Boshlash';draw()});
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{pause();document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');totalSeconds=Number(b.dataset.min)*60;remaining=totalSeconds;$('modeLabel').textContent=b.dataset.label;$('start').textContent='Boshlash';draw()}));
+$('theme').addEventListener('click',async()=>{document.body.classList.toggle('light');let light=document.body.classList.contains('light');$('theme').textContent=light?'☀':'☾';await storage.set('light',light)});
+(async()=>{tasks=await storage.get('tasks',[]);render();$('note').value=await storage.get('note','');$('chars').textContent=$('note').value.length+' belgi';if(await storage.get('light',false)){document.body.classList.add('light');$('theme').textContent='☀'}draw()})();

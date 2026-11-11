@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "SmartTab — New Tab Assistant",
+  "version": "1.0.0",
+  "description": "Yangi tabda vazifalar, qaydlar, fokus taymeri va tezkor havolalar.",
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}
